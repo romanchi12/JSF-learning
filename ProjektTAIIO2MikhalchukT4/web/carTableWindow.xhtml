@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:dataTable value="#{carBeanSession.carsList}" var="carList" bgcolor="Blue" border="3" cellspacing="1">
+                <h:column>
+                    <h:outputText value="#{carList.id}" />
+                </h:column>
+                <h:column>
+                    <h:inputText value="#{carList.name}" rendered="#{carList.edited}"/>
+                    <h:outputText value="#{carList.name}" rendered="#{not carList.edited}" />
+                </h:column>
+                <h:column>
+                    <h:inputText value="#{carList.year}" rendered="#{carList.edited}"/>
+                    <h:outputText value="#{carList.year}" rendered="#{not carList.edited}" />
+                </h:column>
+                <h:column id="kolOperacja">
+                    <f:facet name="header">Operacja</f:facet>
+                    <h:selectBooleanCheckbox id="editCheckBox" value="#{carList.edited}" rendered="true" onclick="submit()"/>
+                    <h:commandButton id="addRow" value="Wstaw" action="#{carBeanSession.addRow(carList)}" />
+                    <h:commandButton id="delRow" value="Usun" action="#{carBeanSession.delRow(carList)}" />
+                    <h:commandButton id="modRow" value="Modyfikuj" action="#{carBeanSession.modifyRow(carList)}" />
+                </h:column>
+            </h:dataTable>
+            <h:commandButton value="Odczyt danych" action="#{carBeanSession.refreshData()}"/>
+            <h:commandButton value="Zapisz dane" action="#{carBeanSession.saveData()}" />
+        </h:form>
+    </h:body>
+</html>

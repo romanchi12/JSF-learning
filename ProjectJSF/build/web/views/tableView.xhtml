@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/masterTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">       
+        <h:form>
+            <h:dataTable value="#{newJSFManagedBeanSession.danesList}" var="dane" bgcolor="grey"
+                         border="2" cellspacing="2">
+                <h:column>
+                    <f:facet name="header">Id</f:facet>
+                    <h:outputText value="#{dane.id}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">nr</f:facet>
+                    <h:outputText value="#{dane.nr}" rendered="#{not dane.edited}"/>
+                    <h:inputText value="#{dane.nr}" rendered="#{dane.edited}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">tytul</f:facet>
+                    <h:outputText value="#{dane.tytul}" rendered="#{not dane.edited}"/>
+                    <h:inputText value="#{dane.tytul}" rendered="#{dane.edited}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">opis</f:facet>
+                    <h:outputText value="#{dane.opis}" rendered="#{not dane.edited}"/>
+                    <h:inputText value="#{dane.opis}" rendered="#{dane.edited}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Kwota</f:facet>
+                    <h:outputText value="#{dane.kwota}" rendered="#{not dane.edited}"/>
+                    <h:inputText value="#{dane.kwota}" rendered="#{dane.edited}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Operation</f:facet>
+                    <h:selectBooleanCheckbox id="editCheckBox1" value="#{dane.edited}" rendered="true">
+                        <f:ajax listener="#{newJSFManagedBeanSession.visibleChange(dane)}"
+                                execute="@form" render="@form"/>
+                    </h:selectBooleanCheckbox>
+                    <h:commandButton id="addRow"  value="+">
+                        <f:ajax listener="#{newJSFManagedBeanSession.addRow(dane)}"
+                                execute="@form" render="@form"/>
+                    </h:commandButton>
+                    <h:commandButton id="deleteRow" value="-">
+                        <f:ajax listener="#{newJSFManagedBeanSession.deleteRow(dane)}" 
+                                execute="@form" render="@form"/> 
+                    </h:commandButton>
+                </h:column>
+            </h:dataTable>
+            
+            
+        </h:form>
+    </ui:define>
+
+</ui:composition>
